@@ -1,0 +1,9 @@
+<form action="{% url 'accounts:signup' %}" method="post">
+    {% csrf_token %}
+    {{form.errors}}
+    <br><br>{{form.username}}
+    <br><br>{{form.email}}
+    <br><br>{{form.password1}}
+    <br><br>{{form.password2}}
+    <button type="submit">Submit</button>
+</form>
