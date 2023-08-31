@@ -32,7 +32,7 @@ class Song(BaseModel):
 
 class Playlist(BaseModel):
     songs = models.ManyToManyField(Song)
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField(null=True,blank=True)
 
 
