@@ -16,7 +16,7 @@ class Genre(BaseModel):
 class Artist(BaseModel):
     name = models.CharField(max_length=50)
     bio = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to="/images/artists/", null=True)
+    image = models.ImageField(upload_to="images/artists/", null=True)
 
 
 
@@ -24,9 +24,9 @@ class Song(BaseModel):
     title = models.CharField(max_length=50)
     artists = models.ManyToManyField(Artist)
     published_at = models.DateTimeField(default=datetime.now)
-    cover = models.ImageField(upload_to="/covers/song/", null=True)
-    genre = models.ForeignKey(Genre, on_delete=models.SET_NULL)
-    audio_file = models.FileField("/songs/")
+    cover = models.ImageField(upload_to="covers/song/", null=True)
+    genre = models.ForeignKey(Genre, on_delete=models.SET_NULL,null=True)
+    audio_file = models.FileField(upload_to="songs/")
 
 
 
