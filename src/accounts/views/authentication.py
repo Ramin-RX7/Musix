@@ -1,16 +1,14 @@
 import re
 
 from django.http import HttpResponse
-from django.shortcuts import render,redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView,RedirectView
 from django.contrib.auth import (authenticate, login as django_login, logout as django_logout)
-from django.contrib.auth.decorators import login_required,permission_required
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .forms import SignupForm,LoginForm
-from .models import User
+from ..forms import SignupForm,LoginForm
+from ..models import User
 
 
 
@@ -18,6 +16,11 @@ class Signup(FormView):
     form_class = SignupForm
     success_url = reverse_lazy("accounts:profile")
     template_name = "accounts/signup.html"
+
+    def dispatch(self, request, *args, **kwargs) -> HttpResponse:
+        if isinstance(request.user, User):
+            return redirect("accounts:profile")
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         form.save()
@@ -33,7 +36,7 @@ class Login(FormView):
 
     def dispatch(self, request, *args, **kwargs):
         if isinstance(request.user, User):
-            return redirect("panel:dashboard")
+            return redirect("accounts:profile")
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request):
@@ -50,7 +53,7 @@ class Login(FormView):
         print(login_option_type)
 
         if user:=authenticate(self.request, **{login_option_type:login_option, "password":cd["password"]}):
-            # django_login(self.request, user)
+            django_login(self.request, user)
             print("login")
             if not cd["remind_me"]:
                 self.request.session.set_expiry(0)
@@ -83,13 +86,9 @@ class Login(FormView):
 
 
 
-class Logout(RedirectView):
+class Logout(RedirectView,LoginRequiredMixin):
     url = reverse_lazy("index")
 
     def get(self, request, *args, **kwargs):
         django_logout(request)
         return super().get(request, *args, **kwargs)
-
-
-def Profile(request):
-    return HttpResponse("XX")
