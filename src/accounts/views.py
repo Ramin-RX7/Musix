@@ -83,5 +83,13 @@ class Login(FormView):
 
 
 
+class Logout(RedirectView):
+    url = reverse_lazy("index")
+
+    def get(self, request, *args, **kwargs):
+        django_logout(request)
+        return super().get(request, *args, **kwargs)
+
+
 def Profile(request):
     return HttpResponse("XX")
