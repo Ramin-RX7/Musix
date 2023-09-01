@@ -22,4 +22,4 @@ class LoginForm(forms.Form):
             'placeholder': "Password..."
         })
     )
-    remidn_me = forms.BooleanField(initial=True)
+    remind_me = forms.BooleanField(required=False, initial=True)
