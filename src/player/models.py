@@ -39,8 +39,10 @@ class Song(BaseModel,CodeBased):
 
 
 class Playlist(BaseModel,CodeBased):
+    name = models.CharField(max_length=25)
     songs = models.ManyToManyField(Song)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="images/playlists/", null=True)
     description = models.TextField(null=True,blank=True)
 
     def __str__(self):
