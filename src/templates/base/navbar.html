@@ -8,7 +8,7 @@
                 <!-- Menu -->
                 <nav class="classy-navbar justify-content-between" id="oneMusicNav">
                     <!-- Nav brand -->
-                    <a href="index.html" class="nav-brand"><img src="{% static 'img/core-img/logo.png' %}" alt=""></a>
+                    <a href="{% url 'index' %}" class="nav-brand"><img src="{% static 'img/core-img/logo.png' %}" alt=""></a>
                     <!-- Navbar Toggler -->
                     <div class="classy-navbar-toggler">
                         <span class="navbarToggler"><span></span><span></span><span></span></span>
@@ -22,11 +22,11 @@
                         <!-- Nav Start -->
                         <div class="classynav">
                             <ul>
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="{% url 'index' %}">Home</a></li>
                                 <li><a href="albums-store.html">Albums</a></li>
                                 <li><a href="#">Pages</a>
                                     <ul class="dropdown">
-                                        <li><a href="index.html">Home</a></li>
+                                        <li><a href="{% url 'index' %}">Home</a></li>
                                         <li><a href="albums-store.html">Albums</a></li>
                                         <li><a href="event.html">Events</a></li>
                                         <li><a href="blog.html">News</a></li>
