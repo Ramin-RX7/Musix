@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'img/bg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            <p>See what’s in</p>
+            <h2>{{playlist.name}}</h2>
+            <h6 class="mt-2 text-secondary"><a href="{% url 'accounts:profile' playlist.owner.username %}" class="text-secondary">by "{{playlist.owner.username}}"</a></h6>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Miscellaneous Area Start ##### -->
+    <section class="miscellaneous-area section-padding-100-0">
+        <div class="container">
+            <div class="row">
+                <!-- ***** New Hits Songs ***** -->
+                <div class="col-12">
+                    <div class="new-hits-area mb-100">
+                        <div class="section-heading text-left mb-50 wow fadeInUp" data-wow-delay="50ms">
+                            <p>Play songs of </p>
+                            <h2>{{playlist.name}}</h2>
+                        </div>
+
+                        <div class="row">
+                        {% for song in playlist.songs.all %}
+                        <!-- Single Top Item -->
+                        <div class="col-lg-4 col-md-6 col-12 single-new-item d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="100ms">
+                            <a href="{% url 'player:song' song.code %}" class="col-lg-4 col-md-6 col-12">
+                                <div class="first-part d-flex align-items-center">
+                                    <div class="thumbnail">
+                                        {% if song.cover %}
+                                            <img src="{{song.cover.url}}" alt="">
+                                        {% else %}
+                                            <img src="{% static 'img/bg-img/wt7.jpg' %}" alt="">
+                                        {% endif %}
+                                    </div>
+                                    <div class="content-">
+                                        <h6>{{song.title}}</h6>
+                                        <p>{{song.get_artists}}</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <audio preload="auto" controls>
+                                <source src="">
+                            </audio>
+                        </div>
+                        {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Miscellaneous Area End ##### -->
+{% endblock %}
