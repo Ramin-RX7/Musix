@@ -35,11 +35,11 @@ class Login(FormView):
 
     template_name = 'accounts/login.html'
     form_class = LoginForm
-    success_url = reverse_lazy("accounts:profile")
+    success_url = reverse_lazy("accounts:login")
 
     def dispatch(self, request, *args, **kwargs):
         if isinstance(request.user, User):
-            return redirect("accounts:profile")
+            return redirect("accounts:profile", request.user.username)
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request):
@@ -53,13 +53,13 @@ class Login(FormView):
             login_option_type = "email"
         else:
             login_option_type = "username"
-        print(login_option_type)
 
         if user:=authenticate(self.request, **{login_option_type:login_option, "password":cd["password"]}):
             django_login(self.request, user)
-            print("login")
             if not cd["remind_me"]:
                 self.request.session.set_expiry(0)
+            else:
+                self.request.session.set_expiry(None)
             return self.form_valid(form)
         else:
             form.add_error(None, "Invalid credentials")
