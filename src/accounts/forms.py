@@ -12,6 +12,11 @@ class SignupForm(UserCreationForm):
         fields = ["email", "username", "password1", "password2"]
         model = User
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # self.fields["name"].widget.attrs.update({"class": "special"})
+        for field_name,field in self.fields.items():
+            field.widget.attrs.update({"class":"form-control"})
 
 
 class LoginForm(forms.Form):
