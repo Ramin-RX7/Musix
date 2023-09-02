@@ -1,2 +1,2 @@
 from .authentication import Login,Logout,Signup
-from .panel import Profile
+from .panel import ProfileView
