@@ -4,11 +4,12 @@ from django.http import Http404
 from django.core.exceptions import ValidationError
 
 
-from .models import Song
+from .models import Song,Artist,Playlist
 
 
 
 class CodeBasedViewMixin:
+    pk_url_kwarg = 'code'
     def get_object(self, queryset=None):
         if queryset is None:
             queryset = self.get_queryset()
