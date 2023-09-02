@@ -2,6 +2,7 @@ from typing import Any, Dict
 from django.http import HttpResponse,Http404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
+from django.shortcuts import redirect
 
 from ..models import User
 
@@ -13,10 +14,20 @@ class ProfileView(DetailView):
     pk_url_kwarg='username'
     context_object_name='user'
 
+
+    def dispatch(self, request, *args, **kwargs):
+        username = self.kwargs.get(self.pk_url_kwarg)
+        if (username == ""):
+            if isinstance(self.request.user, User):
+                return redirect("accounts:profile", username=self.request.user.username)
+            else:
+                return redirect("accounts:login")
+        return super().dispatch(request, *args, **kwargs)
+
+
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["playlists"] = self.object.playlist_set.all()
-        print(context["playlists"])
         return context
 
 
