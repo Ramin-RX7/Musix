@@ -11,13 +11,18 @@ class Genre(BaseModel):
     name = models.CharField(max_length=25, unique=True)
     # parent_genre = models.ForeignKey("Genre", on_delete=models.SET_NULL, null=True)
 
+    def __str__(self):
+        return self.name
 
 
 class Artist(BaseModel,CodeBased):
     name = models.CharField(max_length=50)
     bio = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to="images/artists/", null=True)
-    # user = models.ForeignKey(User, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.name
+
 
 
 class Song(BaseModel,CodeBased):
@@ -28,6 +33,9 @@ class Song(BaseModel,CodeBased):
     genre = models.ForeignKey(Genre, on_delete=models.SET_NULL,null=True)
     # audio_file = models.FileField(upload_to="songs/")
 
+    def __str__(self):
+        return f"{self.title}"
+
 
 
 class Playlist(BaseModel,CodeBased):
@@ -35,6 +43,8 @@ class Playlist(BaseModel,CodeBased):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField(null=True,blank=True)
 
+    def __str__(self):
+        return self.name
 
 
 class Like(models.Model):
