@@ -24,8 +24,13 @@ class CodeBasedViewMixin:
 
 
 
-class SongView(DetailView, CodeBasedViewMixin):
-    model=Song
-    template_name="player/song.html"
-    pk_url_kwarg='code'
-    context_object_name='song'
+class SongView(CodeBasedViewMixin, DetailView):
+    model = Song
+    template_name = "player/song.html"
+    context_object_name = 'song'
+
+
+class PlaylistView(CodeBasedViewMixin, DetailView):
+    model = Playlist
+    template_name = "player/playlist.html"
+    context_object_name = "playlist"
