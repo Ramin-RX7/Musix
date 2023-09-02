@@ -5,6 +5,7 @@ from django.views.generic import DetailView
 from django.shortcuts import redirect
 
 from ..models import User
+from player.models import Playlist
 
 
 
@@ -27,7 +28,7 @@ class ProfileView(DetailView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["playlists"] = self.object.playlist_set.all()
+        context["playlists"] = Playlist.objects.filter(owner=self.object)
         return context
 
 
