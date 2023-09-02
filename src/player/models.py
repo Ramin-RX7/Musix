@@ -36,6 +36,10 @@ class Song(BaseModel,CodeBased):
     def __str__(self):
         return f"{self.title}"
 
+    @property
+    def get_artists(self):
+        return ", ".join(map(str,self.artists.all()))
+
 
 
 class Playlist(BaseModel,CodeBased):
