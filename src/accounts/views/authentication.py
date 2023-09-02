@@ -14,17 +14,20 @@ from ..models import User
 
 class Signup(FormView):
     form_class = SignupForm
-    success_url = reverse_lazy("accounts:profile")
+    success_url = reverse_lazy("accounts:signup")
     template_name = "accounts/signup.html"
 
     def dispatch(self, request, *args, **kwargs) -> HttpResponse:
         if isinstance(request.user, User):
-            return redirect("accounts:profile")
+            return redirect("accounts:profile", username=request.user.username)
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        form.save()
+        user = form.save()
+        self.request.user = user
+        django_login(self.request, user)
         return super().form_valid(form)
+
 
 
 
