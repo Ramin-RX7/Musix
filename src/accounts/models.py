@@ -3,6 +3,7 @@ import re
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import UserManager as DjangoUserManager
+from django.core.validators import MinLengthValidator
 
 from core.models import BaseModel
 
@@ -18,6 +19,7 @@ class UserManager(DjangoUserManager):
 
 
 class User(AbstractUser, BaseModel):
+    username = models.SlugField(max_length=16, validators=[MinLengthValidator(7)], unique=True)
     email = models.EmailField(unique=True)
     _usertype_fields = models.TextChoices("Type","Normal VIP")
     account_type = models.CharField(choices=_usertype_fields.choices, max_length=6,default="Normal")
