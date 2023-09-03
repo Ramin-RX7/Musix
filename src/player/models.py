@@ -17,8 +17,9 @@ class Genre(BaseModel):
 
 class Artist(BaseModel,CodeBased):
     name = models.CharField(max_length=50)
-    bio = models.TextField(blank=True, null=True)
+    bio = models.TextField(blank=True, null=True, default="")
     image = models.ImageField(upload_to="images/artists/", null=True)
+    user = models.OneToOneField(User, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
