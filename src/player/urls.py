@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import SongView,PlaylistView,LikeView,PlaylistListView
+from .views import SongView,PlaylistView,LikeView,PlaylistListView,SongsListView
 
 
 
@@ -12,4 +12,5 @@ urlpatterns = [
     path("playlist/<slug:code>/", PlaylistView.as_view(), name="playlist"),
     path("like/", LikeView.as_view(), name="like"),
     path("playlists/", PlaylistListView.as_view(), name="playlists"),
+    path("songs/", SongsListView.as_view(), name="songs")
 ]
