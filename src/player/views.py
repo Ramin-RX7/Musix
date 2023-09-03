@@ -93,3 +93,23 @@ class PlaylistListView(ListView):
                 ordering = (ordering,)
             queryset = queryset.order_by(*ordering)
         return queryset[:self.max_objects_count]
+
+
+
+class SongsListView(ListView):
+    model = Song
+    context_object_name = "songs"
+    template_name = "player/songs.html"
+    ordering = ("-published_at", "title")
+    paginate_by = 3
+
+    def get_queryset(self):
+        searched = self.request.GET.get("search")
+        if searched and len(searched)>=3:
+            print("search")
+            queryset = self.model.objects.filter(name__icontains=searched)
+        else:
+            print("all")
+            queryset = self.model._default_manager.all()
+        queryset = queryset.order_by(*(self.ordering))
+        return queryset
