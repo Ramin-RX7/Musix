@@ -35,3 +35,20 @@ class PlaylistView(CodeBasedViewMixin, DetailView):
     model = Playlist
     template_name = "player/playlist.html"
     context_object_name = "playlist"
+
+
+
+class LikeView(View):
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        if not isinstance(request.user, User):
+            return HttpResponse("ERROR")
+        return super().dispatch(request, *args, **kwargs)
+    def post(self, request):
+        song = Song.objects.get(id=request.POST["song_id"])
+        like,created = Like.objects.get_or_create(owner=request.user, song=song)
+        if not created:
+            # print("deleting")
+            like.delete()
+        # else:
+            # print("liked")
+        return HttpResponse("OK")
