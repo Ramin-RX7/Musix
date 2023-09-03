@@ -17,7 +17,7 @@
                             <div class="hero-slides-content text-center">
                                 <h6 data-animation="fadeInUp" data-delay="100ms">Latest album</h6>
                                 <h2 data-animation="fadeInUp" data-delay="300ms">Beyond Time <span>Beyond Time</span></h2>
-                                <a data-animation="fadeInUp" data-delay="500ms" href="#" class="btn oneMusic-btn mt-50">Discover <i class="fa fa-angle-double-right"></i></a>
+                                <!-- <a data-animation="fadeInUp" data-delay="500ms" href="#" class="btn oneMusic-btn mt-50">Discover <i class="fa fa-angle-double-right"></i></a> -->
                             </div>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                             <div class="hero-slides-content text-center">
                                 <h6 data-animation="fadeInUp" data-delay="100ms">Latest album</h6>
                                 <h2 data-animation="fadeInUp" data-delay="300ms">Colorlib Music <span>Colorlib Music</span></h2>
-                                <a data-animation="fadeInUp" data-delay="500ms" href="#" class="btn oneMusic-btn mt-50">Discover <i class="fa fa-angle-double-right"></i></a>
+                                <!-- <a data-animation="fadeInUp" data-delay="500ms" href="#" class="btn oneMusic-btn mt-50">Discover <i class="fa fa-angle-double-right"></i></a> -->
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                                 <img src="{% static 'img/bg-img/a1.jpg' %}" alt="">
                             {% endif %}
                             <div class="album-info">
-                                <a href="#">
+                                <a href="{% url 'player:playlist' playlist.code %}">
                                     <h5>{{playlist.name}}</h5>
                                 </a>
                                 <p>by <a href="{% url 'accounts:profile' playlist.owner.username %}">"{{playlist.owner}}"</a></p>
@@ -107,11 +107,13 @@
                 <div class="col-12 col-sm-6 col-md-4 col-lg-2">
                     <div class="single-album-area wow fadeInUp" data-wow-delay="100ms">
                         <div class="album-thumb">
+                            <a href="{% url 'player:song' song.code %}">
                             {% if song.cover %}
                                 <img src="{{song.cover.url}}" alt="">
                             {% else %}
                                 <img src="{% static 'img/bg-img/b1.jpg' %}" alt="">
                             {% endif %}
+                            </a>
                             <!-- Album Price -->
                             <!-- <div class="album-price"> -->
                                 <!-- <p>$0.90</p> -->
@@ -122,13 +124,11 @@
                             </div> -->
                         </div>
                         <div class="album-info">
-                            <a href="#">
+                            <a href="{% url 'player:song' song.code %}">
                                 <h5>{{song.title}}</h5>
                             </a>
                             <p>
-                            {% for artist in song.artists.all %}
-                                {{artist}},
-                            {% endfor %}
+                            {{song.get_artists}}
                             </p>
                         </div>
                     </div>
@@ -139,7 +139,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="load-more-btn text-center wow fadeInUp" data-wow-delay="300ms">
-                        <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
+                        <!-- <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a> -->
                     </div>
                 </div>
             </div>
