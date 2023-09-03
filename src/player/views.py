@@ -1,4 +1,5 @@
 from typing import Any
+from django.db.models.query import QuerySet
 from django.views.generic import ListView,DetailView
 from django.http import Http404,HttpResponse,HttpRequest
 from django.core.exceptions import ValidationError
@@ -69,3 +70,26 @@ class LikeView(View):
         # else:
             # print("liked")
         return HttpResponse("OK")
+
+
+class PlaylistListView(ListView):
+    model = Playlist
+    context_object_name = "playlists"
+    template_name = "player/playlists.html"
+    ordering = "-updated_at"
+    max_objects_count = 60
+
+    def get_queryset(self):
+        searched = self.request.GET.get("search")
+        if searched and len(searched)>=3:
+            print("search")
+            queryset = self.model.objects.filter(name__icontains=searched)
+        else:
+            print("all")
+            queryset = self.model._default_manager.all()
+        ordering = self.get_ordering()
+        if ordering:
+            if isinstance(ordering, str):
+                ordering = (ordering,)
+            queryset = queryset.order_by(*ordering)
+        return queryset[:self.max_objects_count]
