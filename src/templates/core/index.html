@@ -169,7 +169,11 @@
                                 <p>{{latest_song.get_artists}} - {{latest_song.title}}</p>
                             </div>
                             <audio preload="auto" controls>
-                                <source src="{{latest_song}}">
+                                {% if latest_song.audio_file %}
+                                    <source src="{{latest_song.audio_file.audio}}">
+                                {% else %}
+                                    <source src="{% static 'audio.mp3' %}">
+                                {% endif %}
                             </audio>
                         </div>
                     </div>
