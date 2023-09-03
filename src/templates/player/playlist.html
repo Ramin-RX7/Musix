@@ -26,25 +26,33 @@
                         <div class="row">
                         {% for song in playlist.songs.all %}
                         <!-- Single Top Item -->
-                        <div class="col-lg-4 col-md-6 col-12 single-new-item d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="100ms">
-                            <a href="{% url 'player:song' song.code %}" class="col-lg-4 col-md-6 col-12">
-                                <div class="first-part d-flex align-items-center">
-                                    <div class="thumbnail">
-                                        {% if song.cover %}
-                                            <img src="{{song.cover.url}}" alt="">
+                        <div class="col-12 px-1 single-new-item d-flex align-items-center justify-content-between wow fadeInUp" data-wow-delay="100ms">
+                            <div class="row w-100 align-items-center">
+                                <a href="{% url 'player:song' song.code %}" class="col-lg-4 col-md-6 col-12 py-3">
+                                    <div class="first-part d-flex align-items-center">
+                                        <div class="thumbnail">
+                                            {% if song.cover %}
+                                                <img src="{{song.cover.url}}" alt="">
+                                            {% else %}
+                                                <img src="{% static 'img/bg-img/wt7.jpg' %}" alt="">
+                                            {% endif %}
+                                        </div>
+                                        <div class="content-">
+                                            <h6>{{song.title}}</h6>
+                                            <p>{{song.get_artists}}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="py-2 h-100 song-play-area col-lg-7 col-md-6 col-12 mx-3 d-flex justify-content-center" style="flex-direction: column;">
+                                    <audio preload="auto" controls>
+                                        {% if song.audio_file %}
+                                            <source src="{{song.audio_file.audio}}">
                                         {% else %}
-                                            <img src="{% static 'img/bg-img/wt7.jpg' %}" alt="">
+                                            <source src="{% static 'audio.mp3' %}">
                                         {% endif %}
-                                    </div>
-                                    <div class="content-">
-                                        <h6>{{song.title}}</h6>
-                                        <p>{{song.get_artists}}</p>
-                                    </div>
+                                    </audio>
                                 </div>
-                            </a>
-                            <audio preload="auto" controls>
-                                <source src="">
-                            </audio>
+                            </div>
                         </div>
                         {% endfor %}
                         </div>
