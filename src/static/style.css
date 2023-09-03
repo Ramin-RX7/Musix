@@ -1121,7 +1121,7 @@ img {
     .new-hits-area .single-new-item .audioplayer-time,
     .new-hits-area .single-new-item .audioplayer-volume,
     .new-hits-area .single-new-item .audioplayer-bar {
-      display: none; }
+       }
 
 /* :: 12.0 Login Area CSS */
 .login-content {
