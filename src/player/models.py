@@ -16,6 +16,7 @@ class Genre(BaseModel):
         return self.name
 
 
+
 class Artist(BaseModel,CodeBased):
     name = models.CharField(max_length=50)
     bio = models.TextField(blank=True, null=True, default="")
@@ -42,6 +43,13 @@ class Song(BaseModel,CodeBased):
     def get_artists(self):
         return ", ".join(map(str,self.artists.all()))
 
+    def get_search_classes(self):
+        letters = {}
+        letters.add(*(map(lambda item: item[0] , self.title.lower().replace("the ", "").split(" "))))
+        # letters.add(*(map(str,self.artists.all())))
+        # letters.add(str(self.genre)[0])
+        return letters
+
 
 
 class Playlist(BaseModel,CodeBased):
@@ -56,8 +64,9 @@ class Playlist(BaseModel,CodeBased):
 
     def get_classes(self):
         letters = {self.owner.username[0].lower(), self.name[0].lower()}
-        print(letters)
         return " ".join(letters)
+
+
 
 
 class Like(models.Model):
