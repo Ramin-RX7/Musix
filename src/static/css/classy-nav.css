@@ -152,7 +152,7 @@ img {
 .classynav ul li.megamenu-item > a:after,
 .classynav ul li.has-down > a:after {
   font-family: 'classyfonts';
-  content: "\e900";
+  /* content: "\e900"; */
   font-size: 12px;
   color: #000000;
   padding-left: 5px;
