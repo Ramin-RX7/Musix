@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'img/bg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            <p>See what’s new</p>
+            <h2>Latest Playlists</h2>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Album Catagory Area Start ##### -->
+    <section class="album-catagory section-padding-100-0">
+        <div class="container">
+            <div class="searchbar d-flex align-items-center" style="flex-direction: column;">
+                <div class="h4">Search in playlists:</div>
+                <form action="{% url 'player:playlists' %}" method="get" class="w-100 mt-1 mb-5 row align-items-center" style="flex-direction: column;">
+                    <input type="text" class="form-control ml-2 col-lg-6 col-md-8 col-12 my-1" name="search" minlength="3">
+                    <div class="row col-12 my-1 justify-content-center">
+                        <button type="submit" class="btn mx-2 col-5 col-md-3 col-lg-2">Search</button>
+                        {% if request.GET.search %}
+                        <button id="clear-search" class="btn mx-2 col-5 col-md-3 col-lg-2">Clear</button>
+                        <script>
+                            document.getElementById("clear-search").onclick = function() {
+                                var currentUrl = window.location.href;
+                                var urlWithoutQuery = currentUrl.split('?')[0];
+                                window.location.href = urlWithoutQuery;
+                            }
+                        </script>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+
+            {% if playlists.count %}
+            <div class="row">
+                <div class="col-12">
+                    <div class="browse-by-catagories catagory-menu d-flex flex-wrap align-items-center mb-70">
+                        <a href="#" data-filter="*">Browse All</a>
+                        <a href="#" data-filter=".a" class="active">A</a>
+                        <a href="#" data-filter=".b">B</a>
+                        <a href="#" data-filter=".c">C</a>
+                        <a href="#" data-filter=".d">D</a>
+                        <a href="#" data-filter=".e">E</a>
+                        <a href="#" data-filter=".f">F</a>
+                        <a href="#" data-filter=".g">G</a>
+                        <a href="#" data-filter=".h">H</a>
+                        <a href="#" data-filter=".i">I</a>
+                        <a href="#" data-filter=".j">J</a>
+                        <a href="#" data-filter=".k">K</a>
+                        <a href="#" data-filter=".l">L</a>
+                        <a href="#" data-filter=".m">M</a>
+                        <a href="#" data-filter=".n">N</a>
+                        <a href="#" data-filter=".o">O</a>
+                        <a href="#" data-filter=".p">P</a>
+                        <a href="#" data-filter=".q">Q</a>
+                        <a href="#" data-filter=".r">R</a>
+                        <a href="#" data-filter=".s">S</a>
+                        <a href="#" data-filter=".t">T</a>
+                        <a href="#" data-filter=".u">U</a>
+                        <a href="#" data-filter=".v">V</a>
+                        <a href="#" data-filter=".w">W</a>
+                        <a href="#" data-filter=".x">X</a>
+                        <a href="#" data-filter=".y">Y</a>
+                        <a href="#" data-filter=".z">Z</a>
+                        <a href="#" data-filter=".number">0-9</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="row oneMusic-albums">
+                {% for playlist in playlists %}
+                <!-- Single Album -->
+                <div class="col-4 col-sm-4 col-md-3 col-lg-2 single-album-item {{playlist.get_classes}}">
+                    <div class="single-album">
+                        <a href="{% url 'player:playlist' playlist.code %}">
+                        {% if playlist.image %}
+                            <img src="{{playlist.image.url}}" alt="">
+                        {% else %}
+                            <img src="{% static 'img/bg-img/a1.jpg' %}" alt="">
+                        {% endif %}
+                        </a>
+                        <div class="album-info">
+                            <a href="{% url 'player:playlist' playlist.code %}">
+                                <h5>{{playlist.name}}</h5>
+                            </a>
+                            <p><a href="{% url 'accounts:profile' playlist.owner.username %}" class="h6">{{playlist.owner.username}}</a></p>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="single-album-item my-5 mx-3 w-100">
+                    <div class="text-center h3">
+                        {% if request.GET.search %}
+                            Unfortunately no playlist found containg "{{request.GET.search}}"
+                        {% else %}
+                            No playlist exists yet. Be the first person to create one
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+    <!-- ##### Album Catagory Area End ##### -->
+
+{% endblock content %}
