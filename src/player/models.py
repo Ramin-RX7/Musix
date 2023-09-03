@@ -32,7 +32,7 @@ class Song(BaseModel,CodeBased):
     published_at = models.DateTimeField(default=datetime.now)
     cover = models.ImageField(upload_to="covers/song/", null=True)
     genre = models.ForeignKey(Genre, on_delete=models.SET_NULL,null=True)
-    # audio_file = models.FileField(upload_to="songs/")
+    audio_file = models.FileField(upload_to="songs/", null=True)
 
     def __str__(self):
         return f"{self.title}"
