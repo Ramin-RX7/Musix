@@ -23,11 +23,11 @@
                         <div class="classynav">
                             <ul>
                                 <li><a href="{% url 'index' %}">Home</a></li>
-                                <li><a href="albums-store.html">Albums</a></li>
+                                <li><a href="{% url 'player:playlists' %}">Playlists</a></li>
                                 <li><a href="#">Pages<i class="bi-arrow-down"></i></a>
                                     <ul class="dropdown">
                                         <li><a href="{% url 'index' %}">Home</a></li>
-                                        <li><a href="albums-store.html">Albums</a></li>
+                                        <li><a href="{% url 'player:playlists' %}">Playlists</a></li>
                                         <li><a href="event.html">Events</a></li>
                                         <li><a href="blog.html">News</a></li>
                                         <li><a href="contact.html">Contact</a></li>
@@ -52,7 +52,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="event.html">Events</a></li>
+                                <li><a href="{% url 'player:songs' %}">Songs</a></li>
                                 <li><a href="blog.html">News</a></li>
                                 <li><a href="contact.html">Contact</a></li>
                             </ul>
