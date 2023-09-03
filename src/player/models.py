@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.db import models
+from django.core.validators import MinLengthValidator
 
 from core.models import BaseModel,CodeBased
 from accounts.models import User
@@ -44,7 +45,7 @@ class Song(BaseModel,CodeBased):
 
 
 class Playlist(BaseModel,CodeBased):
-    name = models.CharField(max_length=25)
+    name = models.CharField(max_length=25, validators=[MinLengthValidator(3)])
     songs = models.ManyToManyField(Song)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="images/playlists/", null=True)
@@ -52,6 +53,11 @@ class Playlist(BaseModel,CodeBased):
 
     def __str__(self):
         return self.name
+
+    def get_classes(self):
+        letters = {self.owner.username[0].lower(), self.name[0].lower()}
+        print(letters)
+        return " ".join(letters)
 
 
 class Like(models.Model):
