@@ -1,1 +1,174 @@
-{{song.title}}
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'img/bg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            <p>See what’s new</p>
+            <h2>News</h2>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+
+        <!-- ##### Blog Area Start ##### -->
+        <div class="blog-area section-padding-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-9">
+
+                        <!-- Single Post Start -->
+                        <div class="single-blog-post mb-100 wow fadeInUp" data-wow-delay="150ms">
+                            <!-- Post Thumb -->
+                            <div class="blog-post-thumb mt-30">
+                                {% if song.cover %}
+                                    <a href="#"><img src="{{song.cover.url}}" alt=""></a>
+                                {% else %}
+                                    <a href="#"><img src="{% static 'img/bg-img/blog1.jpg' %}" alt=""></a>
+                                {% endif %}
+                                {% if user.is_authenticated %}
+                                    <button class="post-date">
+                                        <i class="" style="font-size: 3rem; color: rgb(255, 0, 89);" id="like"></i>
+                                    </button>
+                                {% endif %}
+                            </div>
+                            <div class="blog-content">
+                                <a href="#" class="post-title">{{song.title}}</a>
+                                <div href="">By: {{song.get_artists}}</div>
+                                <div class="post-meta row mb-30">
+                                    <p class="tags col-12 col-lg-6">Published at: <a href="#">{{song.published_at}}</a></p>
+                                    <p class="tags col-12 col-lg-3"><a href="#">{{song.comment_set.count}} Comments</a></p>
+                                    <p class="tags col-12 col-lg-3">Genre: <a href="#">{{song.genre}}</a></p>
+                                </div>
+                            </div>
+                            <div class="song-play-area">
+                                <audio preload="auto" controls>
+                                    <source src="{% static 'audio.mp3' %}">
+                                </audio>
+                            </div>
+                        </div>
+
+
+
+                        <h2>Artists of <i>{{song.title}}</i>:</h2>
+                        {% for artist in song.artists.all %}
+                            <div class="single-blog-post mb-50 wow fadeInUp" data-wow-delay="150ms">
+                                <div class="blog-post-thumb mt-30">
+                                    {% if artist.image %}
+                                        <a href="#"><img src="{{artist.image.url}}" alt=""></a>
+                                    {% else %}
+                                        <a href="#"><img src="{% static 'img/bg-img/blog1.jpg' %}" alt=""></a>
+                                    {% endif %}
+                                </div>
+                                <div class="blog-content">
+                                    <a href="#" class="h1">{{artist.name}}</a>
+                                    <div class="post-meta row mb-30">
+                                        <p class="tags col-12 col-lg-3"><a href="#">{{artist.song_set.count}} Songs</a></p>
+                                    </div>
+                                    <p>{{artist.bio}}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+
+                    <div class="col-12 col-lg-3">
+                        <div class="blog-sidebar-area">
+
+
+                            <!-- Widget Area -->
+                            <div class="single-widget-area mb-30">
+                                <div class="widget-title">
+                                    <h5>Artists</h5>
+                                </div>
+                                <div class="widget-content">
+                                    <ul>
+                                        {% for artist in song.artists.all %}
+                                            <li><a href="#">{{artist.name}}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Widget Area -->
+                            <div class="single-widget-area mb-30">
+                                <div class="widget-title">
+                                    <h5>Genres</h5>
+                                </div>
+                                <div class="widget-content">
+                                    <ul>
+                                        {% for genre in top_genres %}
+                                        <li><a href="#">{{genre.name}}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Widget Area -->
+                            <div class="single-widget-area mb-30">
+                                <div class="widget-title">
+                                    <h5>Playlists</h5>
+                                </div>
+                                <div class="widget-content">
+                                    <ul>
+                                        {% for playlist in playlists %}
+                                        <li><a href="#">{{playlist.name}}</a> <small>bysdfg</small></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- <div class="single-widget-area mb-30">
+                                <a href="#"><img src="{% static 'img/bg-img/add.gif' %}" alt=""></a>
+                            </div> -->
+
+                            <!-- <div class="single-widget-area mb-30">
+                                <a href="#"><img src="{% static 'img/bg-img/add2.gif' %}" alt=""></a>
+                            </div> -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ##### Blog Area End ##### -->
+{% endblock content %}
+
+
+
+{% block extra_scripts %}
+<script>
+    $('#like').addClass(
+        {% if is_liked %}
+            "bi-heart-fill"
+        {% else %}
+            "bi-heart"
+        {% endif %}
+    )
+
+    $('#like').on('click', function() {
+        let response = $.ajax({
+            url: "{% url 'player:like' %}",
+            method: 'POST',
+            data: {song_id:{{song.id}}, csrfmiddlewaretoken: '{{ csrf_token }}'},
+            success: function(res) {
+                // console.log('Data received:', res);
+                if (res === "OK") {
+                    // console.log("true");
+                    $('#like').toggleClass('bi-heart-fill');
+                    $('#like').toggleClass('bi-heart');
+                } else {
+                    // console.log("false")
+                }
+            },
+            error: function(error) {
+                console.error('Error:', error);
+            }
+        });
+
+    });
+</script>
+{% endblock extra_scripts %}
