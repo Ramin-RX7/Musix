@@ -31,6 +31,21 @@ class SongView(CodeBasedViewMixin, DetailView):
     context_object_name = 'song'
 
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        if isinstance(user, User):
+            try:
+                like = Like.objects.get(owner=user, song=self.object) and True
+            except Like.DoesNotExist:
+                like = False
+            print(like)
+            context["is_liked"] = like
+        return context
+
+
+
+
 class PlaylistView(CodeBasedViewMixin, DetailView):
     model = Playlist
     template_name = "player/playlist.html"
