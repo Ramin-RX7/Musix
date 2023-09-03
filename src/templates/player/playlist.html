@@ -43,7 +43,7 @@
                                         </div>
                                     </div>
                                 </a>
-                                <div class="py-2 h-100 song-play-area col-lg-7 col-md-6 col-12 mx-3 d-flex justify-content-center" style="flex-direction: column;">
+                                <div id="{{song.id}}" class="py-2 h-100 song-play-area col-lg-7 col-md-6 col-12 mx-3 d-flex justify-content-center" style="flex-direction: column;">
                                     <audio preload="auto" controls>
                                         {% if song.audio_file %}
                                             <source src="{{song.audio_file.audio}}">
