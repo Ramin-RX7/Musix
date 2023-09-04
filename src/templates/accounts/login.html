@@ -24,13 +24,17 @@
                         <form action="{% url 'accounts:login' %}" method="post">
                             {% csrf_token %}
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Email address</label>
-                                <input name="login_option" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter E-mail/Username">
+                                <label for="exampleInputEmail1">Email / Username</label>
+                                <input name="login_option" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter  E-mail / Username ...">
                                 <!-- <small id="emailHelp" class="form-text text-muted"><i class="fa fa-lock mr-2"></i>We'll never share your email with anyone else.</small> -->
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Password</label>
-                                <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter your password...">
+                            </div>
+                            <div class="d-flex">
+                                <label for="remind_me">Remind Me</label>
+                                <input name="remind_me" checked type="checkbox" class="form-control mx-3" id="remind_me" style="height: 25px; width: 15%;" title="check this if you want to stay logged in after re-openining your browser">
                             </div>
                             <button type="submit" class="btn oneMusic-btn mt-30">Login</button>
                         </form>
