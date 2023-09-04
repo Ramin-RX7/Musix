@@ -26,6 +26,9 @@ class Artist(BaseModel,CodeBased):
     def __str__(self):
         return self.name
 
+    def get_search_classes(self):
+        return self.name[0].lower()
+
 
 
 class Song(BaseModel,CodeBased):
@@ -44,11 +47,11 @@ class Song(BaseModel,CodeBased):
         return ", ".join(map(str,self.artists.all()))
 
     def get_search_classes(self):
-        letters = {}
+        letters = set()
         letters.add(*(map(lambda item: item[0] , self.title.lower().replace("the ", "").split(" "))))
         # letters.add(*(map(str,self.artists.all())))
         # letters.add(str(self.genre)[0])
-        return letters
+        return " ".join(letters)
 
 
 
@@ -62,7 +65,7 @@ class Playlist(BaseModel,CodeBased):
     def __str__(self):
         return self.name
 
-    def get_classes(self):
+    def get_search_classes(self):
         letters = {self.owner.username[0].lower(), self.name[0].lower()}
         return " ".join(letters)
 
