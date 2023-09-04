@@ -26,7 +26,7 @@ class Command(BaseCommand):
         except IntegrityError:
             user = User.objects.get(pk=1)
 
-        artist = Artist.objects.create(name="MyArt")
+        artist = Artist.objects.create(name="MyArt", user=user)
         genre = Genre.objects.create(name="EDM")
         song = Song(title="ST",genre=genre,)
         song.save()
