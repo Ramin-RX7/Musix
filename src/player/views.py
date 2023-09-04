@@ -143,3 +143,30 @@ class ArtistListView(ListView):
 
 
 
+
+class ArtistView(CodeBasedViewMixin, DetailView):
+    model = Artist
+    template_name = "player/artist.html"
+    context_object_name = "user"
+
+
+    def get_object(self, queryset=None):
+        if queryset is None:
+            queryset = self.get_queryset()
+        try:
+            queryset = queryset.filter(code=self.kwargs.get("code")).prefetch_related("song_set")
+            # print(queryset.values())
+            obj = queryset.get()
+        except (ValidationError,queryset.model.DoesNotExist):
+            raise Http404(
+                ("No %(verbose_name)s found matching the query")
+                    % {"verbose_name": queryset.model._meta.verbose_name}
+            )
+        return obj
+
+
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["songs"] = self.object.song_set.all()
+        return context
