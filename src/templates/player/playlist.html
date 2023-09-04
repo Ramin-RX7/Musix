@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
+
+
+{% block extra_styles %}
+<link rel="stylesheet" href="https://unpkg.com/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@jarstone/dselect/dist/css/dselect.css">  <title>dselect - Dropdown select box for bootstrap 5</title>
+{% endblock extra_styles %}
+
+
+
 {% block content %}
     <!-- ##### Breadcumb Area Start ##### -->
     <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'img/bg-img/breadcumb3.jpg' %});">
@@ -17,6 +26,20 @@
             <div class="row">
                 <!-- ***** New Hits Songs ***** -->
                 <div class="col-12">
+
+                    <div class="searchbar d-flex align-items-center" style="flex-direction: column;">
+                        <div class="h4">Add songs:</div>
+
+                        <select class="form-select w-50" id="dselect-example" style="">
+                            {% for song in songs %}
+                                <option value="{{song.id}}">{{song.title}}</option>
+                            {% endfor %}
+                        </select>
+
+                        <button type="submit" class="btn-primary btn m-2 mb-4 col-5 col-md-3 col-lg-2">Search</button>
+
+                    </div>
+
                     <div class="new-hits-area mb-100">
                         <div class="section-heading text-left mb-50 wow fadeInUp" data-wow-delay="50ms">
                             <p>Play songs of </p>
@@ -64,3 +87,19 @@
     </section>
     <!-- ##### Miscellaneous Area End ##### -->
 {% endblock %}
+
+
+{% block extra_scripts %}
+<script src="https://unpkg.com/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/@jarstone/dselect/dist/js/dselect.js"></script>
+<script>
+    const config = {
+        search: true, // Toggle search feature. Default: false
+        creatable: false, // Creatable selection. Default: false
+        clearable: false, // Clearable selection. Default: false
+        maxHeight: '200px', // Max height for showing scrollbar. Default: 360px
+        size: 'sm', // Can be "sm" or "lg". Default ''
+    }
+    dselect(document.querySelector('#dselect-example'), config)
+</script>
+{% endblock extra_scripts %}
