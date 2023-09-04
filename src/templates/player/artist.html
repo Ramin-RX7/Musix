@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'img/bg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            <p>Here you are</p>
+            <h2>Songs</h2>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Events Area Start ##### -->
+    <section class="events-area section-padding-100">
+        <div class="container">
+            <div class="row">
+                {% for song in songs %}
+                <!-- Single Event Area -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="single-event-area mb-30">
+                        <div class="event-thumbnail">
+                            {% if song.cover %}
+                                <img src="{{ song.cover.url }}" alt="">
+                            {% else %}
+                                <img src="{% static 'img/bg-img/e9.jpg' %}" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="event-text">
+                            <h4>{{ song.title }}</h4>
+                            <div class="event-meta-data">
+                                <!-- <a href="#" class="event-place">Space Ibiza</a> -->
+                                <a>Published at</a>
+                                <a href="#" class="event-date">{{song.published_at}}</a>
+                            </div>
+                            <a href="{% url 'player:song' song.code %}" class="btn see-more-btn">See details</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+
+            <!-- <div class="row">
+                <div class="col-12">
+                    <div class="load-more-btn text-center mt-70">
+                        <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </section>
+    <!-- ##### Events Area End ##### -->
+
+{% endblock content %}
