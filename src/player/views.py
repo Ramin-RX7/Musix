@@ -54,6 +54,10 @@ class PlaylistView(CodeBasedViewMixin, DetailView):
     template_name = "player/playlist.html"
     context_object_name = "playlist"
 
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["songs"] = Song.objects.all()
+        return context
 
 
 class LikeView(View):
@@ -65,10 +69,7 @@ class LikeView(View):
         song = Song.objects.get(id=request.POST["song_id"])
         like,created = Like.objects.get_or_create(owner=request.user, song=song)
         if not created:
-            # print("deleting")
             like.delete()
-        # else:
-            # print("liked")
         return HttpResponse("OK")
 
 
