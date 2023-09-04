@@ -77,7 +77,7 @@
             <div class="row oneMusic-albums">
                 {% for song in songs %}
                 <!-- Single Album -->
-                <div class="col-4 col-sm-4 col-md-3 col-lg-2 single-album-item {{songs.get_classes}}">
+                <div class="col-4 col-sm-4 col-md-3 col-lg-2 single-album-item {{song.get_search_classes}}">
                     <div class="single-album">
                         <a href="{% url 'player:song' song.code %}">
                         {% if song.cover %}
@@ -90,7 +90,7 @@
                             <a href="{% url 'player:song' song.code %}">
                                 <h5>{{song.title}}</h5>
                             </a>
-                            <p><a href="{% url 'accounts:profile' songs.owner.username %}" class="h6">{{song.artist.name}}</a></p>
+                            <p><a href="{% url 'accounts:profile' song.artist.code %}" class="h6">{{song.artist.name}}</a></p>
                         </div>
                     </div>
                 </div>
