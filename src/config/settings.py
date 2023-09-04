@@ -146,3 +146,10 @@ AUTHENTICATION_BACKENDS = [
     # 'accounts.auth.UserAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+# SESSION_SAVE_EVERY_REQUEST = True
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# https://stackoverflow.com/questions/14830669/how-to-expire-django-session-in-5minutes
+# https://docs.djangoproject.com/en/dev/topics/http/sessions/#browser-length-vs-persistent-sessions
+# https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-SESSION_COOKIE_AGE
+# https://stackoverflow.com/questions/9267957/is-there-a-way-to-combine-behavior-of-session-expire-at-browser-close-and-sessio
