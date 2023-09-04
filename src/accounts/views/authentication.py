@@ -55,11 +55,11 @@ class Login(FormView):
             login_option_type = "username"
 
         if user:=authenticate(self.request, **{login_option_type:login_option, "password":cd["password"]}):
-            django_login(self.request, user)
             if not cd["remind_me"]:
                 self.request.session.set_expiry(0)
             else:
                 self.request.session.set_expiry(None)
+            django_login(self.request, user)
             return self.form_valid(form)
         else:
             form.add_error(None, "Invalid credentials")
